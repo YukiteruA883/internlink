@@ -7,7 +7,7 @@ import SupportPage from './support';
 
 export default function Navbar() {
     return (
-        <div>
+        <div className="fixed top-0 w-full z-10">
             <motion.div
                 className="flex justify-between items-center bg-black p-5"
                 initial={{ y: -100 }}
@@ -20,7 +20,7 @@ export default function Navbar() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                 >
-                    InternLink
+                    InternLink&#174;
                 </motion.div>
                 <div className="flex justify-end gap-20 text-white">
                     <motion.div

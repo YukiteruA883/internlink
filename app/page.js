@@ -19,7 +19,7 @@ export default function Home() {
 
   const [refInfo, inViewInfo] = useInView({
     triggerOnce: true,
-    threshold: 0.3,
+    threshold: 0.5,
   });
 
   const controlsReady = useAnimation();
@@ -31,29 +31,33 @@ export default function Home() {
 
   if (inView) {
     controls.start({
-      opacity: 1, // Set opacity to 1 for fade-in effect
-      transition: { type: 'ease', duration: 1, ease: 'easeInOut' }, 
+      opacity: 1,
+      y: 0, // Slide-in effect
+      transition: { type: 'ease', duration: 1, ease: 'easeInOut' },
     });
   }
 
   if (inViewFeatures) {
     controlsFeatures.start({
-      opacity: 1, // Set opacity to 1 for fade-in effect
-      transition: { type: 'ease', duration: 1, ease: 'easeInOut' }, 
+      opacity: 1,
+      y: 0, // Slide-in effect
+      transition: { type: 'ease', duration: 1, ease: 'easeInOut' },
     });
   }
 
   if (inViewInfo) {
     controlsInfo.start({
-      opacity: 1, // Set opacity to 1 for fade-in effect
-      transition: { type: 'ease', duration: 1, ease: 'easeInOut' }, 
+      opacity: 1,
+      y: 0, // Slide-in effect
+      transition: { type: 'ease', duration: 1, ease: 'easeInOut' },
     })
   }
 
   if (inViewReady) {
     controlsReady.start({
-      opacity: 1, // Set opacity to 1 for fade-in effect
-      transition: { type: 'ease', duration: 1, ease: 'easeInOut' }, // Slow fade-in transition
+      opacity: 1,
+      y: 0, // Slide-in effect
+      transition: { type: 'ease', duration: 1, ease: 'easeInOut' },
     });
   }
 
@@ -67,7 +71,7 @@ export default function Home() {
             transition={{ duration: 1.5 }}
           >
             <h1 className="text-6xl font-bold text-black dark:text-white mb-5">
-              InternLink
+              InternLink&#174;
             </h1>
           </motion.div>
           <motion.div
@@ -86,7 +90,7 @@ export default function Home() {
         <motion.h2
           className="text-4xl font-bold text-black mb-5"
           animate={controls}
-          initial={{ x: '0', opacity: 0 }}
+          initial={{ x: '0', opacity: 0, y: 100 }}
         >
           Welcome to InternLink
         </motion.h2>
@@ -94,7 +98,7 @@ export default function Home() {
           <motion.div
             className="w-1/2 text-center px-12"
             animate={controls}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
             transition={{delay: 0.3}}
           >
             <p className="text-2xl text-black pt-20">
@@ -106,7 +110,7 @@ export default function Home() {
           <motion.div
             className="w-1/2 items-center justify-center pl-12 pt-10"
             animate={controls}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
             transition={{delay: 0.7}}
           >
             <img src="https://www.betterup.com/hubfs/Man%20has%20overwork%20and%20sitting%20with%20laptop%20and%20table%20lamp.%20Mental%20work%20with%20paper.%20Empty%20office.jpg" className="w-96 rounded-xl" />
@@ -118,7 +122,7 @@ export default function Home() {
         <motion.h2
           className="text-4xl font-bold text-black mb-5"
           animate={controlsFeatures}
-          initial={{ x: '0', opacity: 0 }}
+          initial={{ x: '0', opacity: 0, y: 100 }}
         >
           Features
         </motion.h2>
@@ -126,7 +130,7 @@ export default function Home() {
           <motion.div
             className="flex flex-col items-center"
             animate={controlsFeatures}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
           >
             <img src="https://cdn-icons-png.flaticon.com/512/4456/4456893.png" alt="Easy To Use" className="w-20" />
             <p className="text-xl text-black pt-5">
@@ -137,7 +141,7 @@ export default function Home() {
           <motion.div
             className="flex flex-col items-center"
             animate={controlsFeatures}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
           >
             <img src="https://static.thenounproject.com/png/3238713-200.png" alt="Safe For Both Ends" className="w-20" />
             <p className="text-xl text-black pt-5">
@@ -148,7 +152,7 @@ export default function Home() {
           <motion.div
             className="flex flex-col items-center"
             animate={controlsFeatures}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
           >
             <img src="https://static.thenounproject.com/png/1174765-200.png" alt="High Accessibility" className="w-20" />
             <p className="text-xl text-black pt-5">
@@ -159,7 +163,7 @@ export default function Home() {
           <motion.div
             className="flex flex-col items-center"
             animate={controlsFeatures}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
           >
             <img src="https://cdn-icons-png.flaticon.com/512/5733/5733207.png" alt="Fast & Efficient" className="w-20" />
             <p className="text-xl text-black pt-5">
@@ -171,7 +175,7 @@ export default function Home() {
         <motion.div
             className="flex flex-col items-center"
             animate={controlsFeatures}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
         >
           <p className="text-2xl text-center text-black pt-20">
             At InternLink, we believe that you are the future. Therefore, we strive to deliver a top-tier user experience to help you pave your way to success.
@@ -183,7 +187,7 @@ export default function Home() {
         <motion.h2
           className="text-4xl font-bold text-black mb-5"
           animate={controlsInfo}
-          initial={{ x: '0', opacity: 0 }}
+          initial={{ x: '0', opacity: 0, y: 100 }}
         >
           Internships We Offer
         </motion.h2>
@@ -192,7 +196,7 @@ export default function Home() {
           <motion.div
             className="w-1/2 items-center justify-center pl-40 pt-10"
             animate={controlsInfo}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
           >
             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlJTIwd29ya2luZ3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" className="w-96 rounded-xl" />
           </motion.div>
@@ -200,7 +204,7 @@ export default function Home() {
           <motion.div
             className="w-1/2 text-center px-10"
             animate={controlsInfo}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
           >
             <p className="text-2xl text-black">
               <span className="text-bold text-6xl">13</span><br></br><span className="font-bold">InternLink</span> provides a diverse selection of over <span className="font-bold">13</span> areas of internship for you to explore.
@@ -215,7 +219,7 @@ export default function Home() {
         <motion.h2
           className="text-4xl font-bold text-black mb-5"
           animate={controlsReady}
-          initial={{ x: '0', opacity: 0 }}
+          initial={{ x: '0', opacity: 0, y: 100 }}
         >
           Are You Ready?
         </motion.h2>
@@ -223,7 +227,7 @@ export default function Home() {
           <motion.div
             className="pt-12"
             animate={controlsReady}
-            initial={{ x: '0', opacity: 0 }}
+            initial={{ x: '0', opacity: 0, y: 100 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
