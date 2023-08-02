@@ -1,4 +1,4 @@
-export default function SupportPage() {
+export default function Support() {
     return(
         <>
         </>

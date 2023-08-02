@@ -28,7 +28,7 @@ export default function Navbar() {
                         whileTap={{ scale: 0.9 }}
                     >
                         <div>
-                            <Link href="/internlink/app/page.js">Home</Link>
+                            <Link href="/">Home</Link>
                         </div>
                     </motion.div>
                     <motion.div
@@ -36,7 +36,7 @@ export default function Navbar() {
                         whileTap={{ scale: 0.9 }}
                     >
                         <div>
-                            <Link href="/internlink/app/components/service.js">Service</Link>
+                            <Link href="/Service">Service</Link>
                         </div>
                     </motion.div>
                     <motion.div
@@ -44,7 +44,7 @@ export default function Navbar() {
                         whileTap={{ scale: 0.9 }}
                     >
                         <div>
-                            <Link href="/internlink/app/components/support.js">Support</Link>
+                            <Link href="/Support">Support</Link>
                         </div>
                     </motion.div>
 
