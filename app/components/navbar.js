@@ -11,7 +11,6 @@ export default function Navbar() {
     const { data: session } = useSession();
     const redirectToStudentDashboard = () => {
         signOut({ callbackUrl: `${window.location.origin}/` });
-        
     };
 
     return (
@@ -56,13 +55,23 @@ export default function Navbar() {
                         </div>
                     </motion.div>
 
+                    {/* Dashboard link, only visible if the user is signed in */}
+                    {session && (
+                        <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
+                            <div>
+                                <Link href="/StudentDashboard">Dashboard</Link>
+                            </div>
+                        </motion.div>
+                    )}
+
                     <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
                         {session ? (
-
-
                             <Link href="/">
                                 <button onClick={redirectToStudentDashboard}>
                                     Sign Out
@@ -73,17 +82,9 @@ export default function Navbar() {
                                 <Link href="/Login">Sign In</Link>
                             </button>
                         )}
-
                     </motion.div>
-
-
-
-
-
                 </div>
             </motion.div>
-
         </div>
-
     );
 }

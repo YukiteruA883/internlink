@@ -1,4 +1,12 @@
+"use client"
+import { signIn } from "next-auth/react";
+import { useRouter } from 'next/router';
 export default function studentSignUpPage() {
+
+    const redirectToStudentDashboard = () => {
+        signIn("google", { callbackUrl: `${window.location.origin}/StudentDashboard` });
+      };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-blue-50">
             {/* Centered Panel */}
@@ -32,7 +40,23 @@ export default function studentSignUpPage() {
                     <input type="text" id="lastName" name="lastName" className="p-2 border rounded" />
                 </div>
 
-                <img src="https://static.vecteezy.com/system/resources/previews/012/871/371/original/google-search-icon-google-product-illustration-free-png.png" className="justify-center w-10 align-center"/>
+                {/* Sign In Button */}
+                <div className="mb-4">
+                    <button
+                        className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                    >
+                        Sign In
+                    </button>
+                </div>
+                <div className="flex justify-center items-center gap-5">
+                    <button onClick={redirectToStudentDashboard} className="flex justify-center items-center cursor-pointer bg-white hover:bg-gray-200 transition duration-300 rounded-full w-14 h-14">
+                        <img src="https://static.vecteezy.com/system/resources/previews/012/871/371/original/google-search-icon-google-product-illustration-free-png.png" className="w-8" />
+                    </button>
+                    <button className="flex justify-center items-center cursor-pointer bg-white hover:bg-gray-200 transition duration-300 rounded-full w-14 h-14">
+                        <img src="https://play-lh.googleusercontent.com/mSy3EeRo04767Ev8Po53b7oAvunPFMBf46hlYL1Hr_QjuRmw1ImvHYi9VY3L3bKubhg" className="w-8 rounded-lg" />
+                    </button>
+                </div>
+
 
             </div>
         </div>

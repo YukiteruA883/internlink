@@ -18,11 +18,11 @@ export default function SDashboard() {
             {/* Vertical Navigation Bar */}
             <div className="bg-gray-200 w-64 min-h-screen p-4">
                 <ul className="space-y-4 pt-20">
-                    <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/StudentDashboard">Dashboard</Link></li>
-                    <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Offers">Offers</Link></li>
-                    <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Internships">Current Internships</Link></li>
-                    <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Profile">Profile</Link></li>
-                    <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Settings">Settings</Link></li>
+                    <Link href="/StudentDashboard"><li className="hover:bg-gray-300 p-3 cursor-pointer">Dashboard</li></Link>
+                    <Link href="/Offers"><li className="hover:bg-gray-300 p-3 cursor-pointer">Offers</li></Link>
+                    <Link href="/Internships"><li className="hover:bg-gray-300 p-3 cursor-pointer">Current Internships</li></Link>
+                    <Link href="/Profile"><li className="hover:bg-gray-300 p-3 cursor-pointer">Profile</li></Link>
+                    <Link href="/Settings"><li className="hover:bg-gray-300 p-3 cursor-pointer">Settings</li></Link>
                 </ul>
             </div>
 
@@ -42,7 +42,7 @@ export default function SDashboard() {
                         </p>
                         <img src={profileImage} alt="Profile Picture" className="w-32 h-32 rounded-full border-2 border-black mt-5" />
                         <div className="grid grid-cols-2 gap-10 mt-10 w-3/4">
-                            <div className="bg-gray-100 p-5 rounded shadow">
+                            <div className="bg-blue-100 p-5 rounded shadow">
                                 <div className="flex gap-8">
                                     <p className="font-bold text-xl">Upcoming Internships</p>
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Eo_circle_purple_arrow-up.svg/2048px-Eo_circle_purple_arrow-up.svg.png" className="h-10" />
@@ -50,7 +50,7 @@ export default function SDashboard() {
 
                                 <p className="text-lg">{upcomingInternships}</p>
                             </div>
-                            <div className="bg-gray-100 p-5 rounded shadow">
+                            <div className="bg-green-100 p-5 rounded shadow">
                                 <div className="flex gap-8">
                                     <p className="font-bold text-xl">Great Offers</p>
                                     <img src="https://static.vecteezy.com/system/resources/previews/019/787/057/original/business-handshake-on-transparent-background-free-png.png" className="h-10" />

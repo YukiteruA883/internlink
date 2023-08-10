@@ -69,13 +69,44 @@ export default function Service() {
         );
     }
 
-const [offers, setOffers] = useState([])
-function getOffers(){
-    fetch("http://localhost:3001/offers").then((response)=>response.json()).then((res)=>setOffers(res))
-}
-useEffect(()=>{
-    getOffers()
-},[])
+
+    const [offers, setOffers] = useState([])
+    function getOffers() {
+        fetch("http://localhost:3001/offers").then((response) => response.json()).then((res) => setOffers(res))
+    }
+
+    function getSomething() {
+        fetch("http://localhost:3001/users").then((response) => response.json()).then((res) => console.log(res))
+    }
+
+    function setInternships() {
+        const data = {
+            title: position,
+            duration: duration,
+            company: company,
+            image: "https://online.jwu.edu/sites/default/files/styles/article_feature_page/public/field/image/hire%20chef%20-%20tiny.jpg?itok=PMLCthNf"
+        }
+        fetch("http://localhost:3001/offers", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
+    }
+
+    function deleteOffer(id) {
+        fetch(`http://localhost:3001/offers/${id}`, { method: "DELETE", headers: { "Content-Type": "application/json" } }).then(getOffers())
+    }
+
+    function updateOffer(id) {
+        const data = {
+            title: position,
+            duration: duration,
+            company: company,
+            image: "https://online.jwu.edu/sites/default/files/styles/article_feature_page/public/field/image/hire%20chef%20-%20tiny.jpg?itok=PMLCthNf"
+        }
+        fetch(`http://localhost:3001/offers/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
+    }
+
+    useEffect(() => {
+        getSomething()
+        getOffers()
+    }, [])
 
     function Nav({ children }) {
         return (
@@ -105,6 +136,35 @@ useEffect(()=>{
         );
     }
 
+    const EditOfferModal = () => {
+        return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-8 rounded-lg shadow-xl w-96">
+                    <button onClick={() => setEditedOffer(null)} className="float-right text-2xl">×</button>
+                    <h2 className="text-2xl font-bold text-center mb-4">Edit Offer</h2>
+                    <label className="block">Intern Position:</label>
+                    <input type="text" defaultValue={editedOffer.title} onChange={(e) => setPosition(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <label className="block">Company Name:</label>
+                    <input type="text"  defaultValue={editedOffer.company} onChange={(e) => setCompany(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <label className="block">Duration of Internship:</label>
+                    <input type="text"  defaultValue={editedOffer.duration} onChange={(e) => setDuration(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700" onClick={() => {
+                        // Update the offer logic here
+                        updateOffer(editedOffer.id);
+                    }}>
+                        Update
+                    </button>
+                </div>
+            </div>
+
+            
+        );
+    }
+
+    
+    
+
+
     function ListItem({ offer }) {
         return (
             <article className="flex items-start space-x-6 p-6 border-2 m-3 rounded-lg">
@@ -126,9 +186,50 @@ useEffect(()=>{
                         <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
                             More information
                         </button>
+
+                            <button onClick={()=> deleteOffer(offer.id)} className="block px-3 py-2 rounded-md bg-sky-500 text-white font-semibold">Delete</button>
+                            <button onClick={() => setEditedOffer(offer)} className="block px-3 py-2 rounded-md bg-sky-500 text-white font-semibold">Edit</button>
+
                     </div>
                 </div>
             </article>
+        );
+    }
+
+    const [showModal, setShowModal] = useState(false);
+    const [editedOffer, setEditedOffer] = useState(null);
+
+    // Function to handle the "Add Offer" button click
+    const handleAddOfferClick = () => {
+        setShowModal(true);
+    };
+
+    // Function to handle closing the modal
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+    const [position, setPosition] = useState("")
+    const [company, setCompany] = useState("")
+    const [duration, setDuration] = useState("")
+    // AddOfferModal component
+    const AddOfferModal = () => {
+
+        return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-8 rounded-lg shadow-xl w-96">
+                    <button onClick={handleCloseModal} className="float-right text-2xl">×</button>
+                    <h2 className="text-2xl font-bold text-center mb-4">Add Offer</h2>
+                    <label className="block">Intern Position:</label>
+                    <input type="text" value={position} onChange={(e) => setPosition(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <label className="block">Company Name:</label>
+                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <label className="block">Duration of Internship:</label>
+                    <input type="text" value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700" onClick={() => setInternships()}>
+                        Submit
+                    </button>
+                </div>
+            </div>
         );
     }
 
@@ -141,11 +242,11 @@ useEffect(()=>{
                 {/* Vertical Navigation Bar */}
                 <div className="bg-gray-200 w-64 min-h-screen p-4">
                     <ul className="space-y-4 pt-20">
-                        <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/StudentDashboard">Dashboard</Link></li>
-                        <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Offers">Offers</Link></li>
-                        <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Internships">Current Internships</Link></li>
-                        <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Profile">Profile</Link></li>
-                        <li className="hover:bg-gray-300 p-3 cursor-pointer"><Link href="/Settings">Settings</Link></li>
+                        <Link href="/StudentDashboard"><li className="hover:bg-gray-300 p-3 cursor-pointer">Dashboard</li></Link>
+                        <Link href="/Offers"><li className="hover:bg-gray-300 p-3 cursor-pointer">Offers</li></Link>
+                        <Link href="/Internships"><li className="hover:bg-gray-300 p-3 cursor-pointer">Current Internships</li></Link>
+                        <Link href="/Profile"><li className="hover:bg-gray-300 p-3 cursor-pointer">Profile</li></Link>
+                        <Link href="/Settings"><li className="hover:bg-gray-300 p-3 cursor-pointer">Settings</li></Link>
                     </ul>
                 </div>
 
@@ -165,21 +266,28 @@ useEffect(()=>{
                     </motion.div>
 
                     <div className="divide-y divide-slate-100">
-                        <Nav>
-                            <NavItem href="/new" isActive>New Offers</NavItem>
-                            <NavItem href="/top">Top Rated</NavItem>
-                            <NavItem href="/picks">Featured</NavItem>
-                        </Nav>
+                        <div className="flex items-center">
+                            <Nav>
+                                <NavItem href="/new" isActive>New Offers</NavItem>
+                                <NavItem href="/top">Top Rated</NavItem>
+                                <NavItem href="/picks">Featured</NavItem>
+                            </Nav>
+                            <div className="block px-3 py-2 rounded-md bg-sky-500 text-white font-semibold">
+                                <button onClick={handleAddOfferClick}>Add Offer</button>
+                            </div>
+                        </div>
                         <List>
                             {offers.map((offer) => (
-                                <ListItem key={offer.id} offer={offer}/>
+                                <ListItem key={offer.id} offer={offer} />
                             ))}
                         </List>
                     </div>
-                    
+
                 </div> {/* End of Main Content */}
 
             </div>
+            {showModal && AddOfferModal()}
+            {editedOffer && EditOfferModal()}
         </div>
     );
 }
