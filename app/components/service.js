@@ -1,6 +1,7 @@
 "use client";
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Link from 'next/link';
 
 export default function Service() {
     const controls = useAnimation()
@@ -96,11 +97,13 @@ export default function Service() {
                         whileTap={{ scale: 0.9 }}
                         transition={{ duration: 2 }}
                     >
-                        <button
-                            className="contact-button bg-gray-700 text-white px-6 py-3 text-2xl rounded-full shadow-md hover:bg-gray-600 transition-transform duration-500 ease-in-out"
-                        >
-                            Sign Up
-                        </button>
+                        <Link href="/StudentSignUp">
+                            <button
+                                className="contact-button bg-gray-700 text-white px-6 py-3 text-2xl rounded-full shadow-md hover:bg-gray-600 transition-transform duration-500 ease-in-out"
+                            >
+                                Sign Up
+                            </button>
+                        </Link>
                     </motion.div>
                 </div>
 

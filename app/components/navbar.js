@@ -5,7 +5,15 @@ import { motion } from 'framer-motion';
 import ServicePage from './service';
 import SupportPage from './support';
 
+import { useSession, signIn, signOut } from 'next-auth/react';
+
 export default function Navbar() {
+    const { data: session } = useSession();
+    const redirectToStudentDashboard = () => {
+        signOut({ callbackUrl: `${window.location.origin}/` });
+        
+    };
+
     return (
         <div className="fixed top-0 w-full z-10">
             <motion.div
@@ -46,6 +54,26 @@ export default function Navbar() {
                         <div>
                             <Link href="/Support">Support</Link>
                         </div>
+                    </motion.div>
+
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                    >
+                        {session ? (
+
+
+                            <Link href="/">
+                                <button onClick={redirectToStudentDashboard}>
+                                    Sign Out
+                                </button>
+                            </Link>
+                        ) : (
+                            <button>
+                                <Link href="/Login">Sign In</Link>
+                            </button>
+                        )}
+
                     </motion.div>
 
 
