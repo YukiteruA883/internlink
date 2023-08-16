@@ -1,17 +1,34 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import ServicePage from './service';
 import SupportPage from './support';
+import { LoginContext } from "../layout";
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Navbar() {
     const { data: session } = useSession();
+    const signin = useContext(LoginContext)
+    const [isSignedIn, setIsSignedIn] = useState(session || signin.signIn);
+
     const redirectToStudentDashboard = () => {
         signOut({ callbackUrl: `${window.location.origin}/` });
+        signin.setSignIn({"firstname":"","lastname": ""})
+        setIsSignedIn(false); // This will trigger a re-render
     };
+
+    useEffect(()=>{
+        setIsSignedIn(session)
+    },[session])
+
+
+    useEffect(() => {
+        setIsSignedIn(signin.signIn);
+    }, [signin.signIn])
+
+    
 
     return (
         <div className="fixed top-0 w-full z-10">
@@ -56,8 +73,8 @@ export default function Navbar() {
                     </motion.div>
 
                     {/* Dashboard link, only visible if the user is signed in */}
-                    {session && (
-                        <motion.div
+                    {(isSignedIn)  && (
+                        <motion.div 
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                         >
@@ -71,7 +88,7 @@ export default function Navbar() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
-                        {session ? (
+                        {isSignedIn ? (
                             <Link href="/">
                                 <button onClick={redirectToStudentDashboard}>
                                     Sign Out
@@ -82,6 +99,7 @@ export default function Navbar() {
                                 <Link href="/Login">Sign In</Link>
                             </button>
                         )}
+
                     </motion.div>
                 </div>
             </motion.div>

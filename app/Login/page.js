@@ -1,40 +1,76 @@
 "use client";
-
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useContext } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from 'next/router';
+import { LoginContext } from "../layout";
 
-export default function loginPage() {
+
+export default function LoginPage() {
+  const [error, setError] = useState(null);
+  const router = useRouter();
+  const signin = useContext(LoginContext)
   const redirectToStudentDashboard = () => {
     signIn("google", { callbackUrl: `${window.location.origin}/StudentDashboard` });
   };
 
+  const handleSignIn = () => {
+    const data = {
+      username: document.getElementById("email").value,
+      password: document.getElementById("password").value
+    }
+
+    fetch("http://localhost:3001/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((user) => {
+        // console.log(users)
+        // const user = users.result.find(
+        //   (user) => user.username === email && user.password === password
+        // );
+        console.log(user)
+        if (user.result) {
+          signin.setSignIn({ "firstname": user.result.firstName, "lastname": user.result.lastName })
+          router.push("/StudentDashboard");
+
+        } else {
+          setError("Invalid email or password")
+          console.log("invalid username and password.")
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50">
-      {/* Centered Panel */}
       <div className="bg-white p-8 rounded-lg shadow-xl w-96">
-        {/* "Sign Up" Text in the Panel */}
         <h2 className="text-2xl font-bold text-center mb-4">Sign In</h2>
-
         <h1 className="text-4xl font-bold text-black dark:text-white mb-5 text-center">
           InternLink&#174;
         </h1>
+        {error && <div className="text-red-500 text-center mb-2">{error}</div>}
+        <div className="flex flex-col mb-4">
+          <label htmlFor="email" className="mb-2">Email</label>
+          <input type="text" id="email" name="email" className="p-2 border rounded" />
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="password" className="mb-2">Password</label>
+          <input type="password" id="password" name="password" className="p-2 border rounded" />
+        </div>
 
-        <div className="flex flex-col mb-4">
-          <label htmlFor="lastName" className="mb-2">Email</label>
-          <input type="text" id="lastName" name="lastName" className="p-2 border rounded" />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="lastName" className="mb-2">Password</label>
-          <input type="text" id="lastName" name="lastName" className="p-2 border rounded" />
-        </div>
-        
-        {/* Sign In Button */}
         <div className="mb-4">
           <button
             className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-            onClick={() => {
-              /* Handle the sign in logic here */
-            }}
+            onClick={handleSignIn}
           >
             Sign In
           </button>
