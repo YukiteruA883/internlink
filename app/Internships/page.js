@@ -1,11 +1,14 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { LoginContext } from '../layout';
 import Link from 'next/link';
 
 export default function Service() {
     const controls = useAnimation()
+    const signin = useContext(LoginContext)
+    const uid = signin.signIn?.uid
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -71,7 +74,7 @@ export default function Service() {
 
     const [internships, setInternships] = useState([])
     function getInternships() {
-        fetch("http://localhost:3001/internships").then((response) => response.json()).then((res) => setInternships(res))
+        fetch("http://localhost:3001/internships/all").then((response) => response.json()).then((res) => setInternships(res.result))
     }
     useEffect(() => {
         getInternships()
@@ -168,9 +171,11 @@ export default function Service() {
                             <NavItem href="/picks">Featured</NavItem>
                         </Nav>
                         <List>
-                            {internships.map((offer) => (
-                                <ListItem key={offer.id} offer={offer} />
-                            ))}
+                            {internships
+                                .filter(offer => offer.uid === uid)
+                                .map((offer) => (
+                                    <ListItem key={offer.id} offer={offer} />
+                                ))}
                         </List>
                     </div>
 

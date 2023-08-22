@@ -46,7 +46,7 @@ export default function StudentSignUpPage() {
             internships: 0
         };
 
-        fetch("http://localhost:3001/users", {
+        fetch("http://localhost:3001/users/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

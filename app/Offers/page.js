@@ -1,11 +1,14 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { signIn } from 'next-auth/react';
+import { LoginContext } from '../layout';
 import Link from 'next/link';
 
 export default function Service() {
     const controls = useAnimation()
+    const signin = useContext(LoginContext) 
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -51,6 +54,31 @@ export default function Service() {
         threshold: 0.3,
     });
 
+    function handleAccept(offer) {
+        const userid = signin.signIn?.uid; // Retrieve the user's UID
+        // Create the data for the new internship record
+        const data = {
+            uid: userid,
+            title: offer.title,
+            company: offer.company,
+            duration: offer.duration,
+            image: offer.image, // Use the image from the offer
+        };
+        // Send the POST request to add the internship
+        fetch("http://localhost:3001/internships/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            // Handle the response here, such as updating the UI or navigating to another page
+        })
+        .catch((error) => {
+            console.error("Error adding internship:", error);
+        });
+    }
+
     if (inViewIntern) {
         controlsIntern.start({
             opacity: 1,
@@ -72,7 +100,8 @@ export default function Service() {
 
     const [offers, setOffers] = useState([])
     function getOffers() {
-        fetch("http://localhost:3001/offers").then((response) => response.json()).then((res) => setOffers(res))
+        fetch("http://localhost:3001/offers/all").then((response) => response.json()).then((res) => setOffers(res.result))
+        
     }
 
     function getSomething() {
@@ -180,7 +209,7 @@ export default function Service() {
                         </div>
                     </div>
                     <div className="flex-auto flex space-x-4">
-                        <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
+                        <button onClick={() => handleAccept(offer)} className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
                             Accept
                         </button>
                         <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">

@@ -35,7 +35,7 @@ export default function LoginPage() {
         // );
         console.log(user)
         if (user.result) {
-          signin.setSignIn({ "firstname": user.result.firstName, "lastname": user.result.lastName })
+          signin.setSignIn({ "firstname": user.result.firstName, "lastname": user.result.lastName, "uid": user.result.uid })
           router.push("/StudentDashboard");
 
         } else {
