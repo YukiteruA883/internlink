@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { signIn } from "next-auth/react";
 import Link from 'next/link';
 
-export default function StudentSignUpPage() {
+
+export default function ProviderSignupPage() {
     const [error, setError] = useState(null);
     const [signedUp, setSignedUp] = useState(false);
 
     const redirectToStudentDashboard = () => {
-        signIn("google", { callbackUrl: `${window.location.origin}/StudentDashboard` });
+        signIn("google", { callbackUrl: `${window.location.origin}/ProviderDashboard` });
     };
 
     const handleSubmit = (e) => {
@@ -37,7 +38,7 @@ export default function StudentSignUpPage() {
         }
 
         const data = {
-            type: "Student",
+            type: "Provider",
             firstName: firstName,
             lastName: lastName,
             username: email,
@@ -53,15 +54,15 @@ export default function StudentSignUpPage() {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(data => {
-            setSignedUp(true);
-        })
-        .catch(error => {
-            console.error("Error adding user:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                setSignedUp(true);
+            })
+            .catch(error => {
+                console.error("Error adding user:", error);
+            });
     };
-    
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-blue-50">
@@ -75,32 +76,33 @@ export default function StudentSignUpPage() {
                     </button>
                 </div>
             ) : (
-                <div className="bg-white p-8 rounded-lg shadow-xl w-96">
+                <div className="bg-white p-8 rounded-lg shadow-xl w-96 mt-24">
+                    <h1 className="text-3xl font-bold text-center mb-4" >Provider</h1>
                     <h2 className="text-2xl font-bold text-center mb-4">Sign Up</h2>
                     <form onSubmit={handleSubmit}>
-                    <div className="flex justify-between space-x-4 mb-4">
-                        <div className="flex flex-col w-32">
-                            <label htmlFor="firstName" className="mb-2">First Name</label>
-                            <input type="text" id="firstName" name="firstName" className="p-2 border rounded" required/>
+                        <div className="flex justify-between space-x-4 mb-4">
+                            <div className="flex flex-col w-32">
+                                <label htmlFor="firstName" className="mb-2">First Name</label>
+                                <input type="text" id="firstName" name="firstName" className="p-2 border rounded" required />
+                            </div>
+                            <div className="flex flex-col w-44">
+                                <label htmlFor="lastName" className="mb-2">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" className="p-2 border rounded" required />
+                            </div>
                         </div>
-                        <div className="flex flex-col w-44">
-                            <label htmlFor="lastName" className="mb-2">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" className="p-2 border rounded" required/>
+                        <div className="flex flex-col mb-4">
+                            <label htmlFor="dob" className="mb-2">Date of Birth</label>
+                            <input type="date" id="dob" name="dob" className="p-2 border rounded" required />
                         </div>
-                    </div>
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="dob" className="mb-2">Date of Birth</label>
-                        <input type="date" id="dob" name="dob" className="p-2 border rounded" required/>
-                    </div>
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="email" className="mb-2">Email</label>
-                        <input type="text" id="email" name="email" className="p-2 border rounded" required/>
-                    </div>
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="password" className="mb-2">Password</label>
-                        <input type="password" id="password" name="password" className="p-2 border rounded" required/>
-                    </div>
-                    <div className="mb-4">
+                        <div className="flex flex-col mb-4">
+                            <label htmlFor="email" className="mb-2">Email</label>
+                            <input type="text" id="email" name="email" className="p-2 border rounded" required />
+                        </div>
+                        <div className="flex flex-col mb-4">
+                            <label htmlFor="password" className="mb-2">Password</label>
+                            <input type="password" id="password" name="password" className="p-2 border rounded" required />
+                        </div>
+                        <div className="mb-4">
                             <button
                                 type="submit"
                                 className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
@@ -120,5 +122,5 @@ export default function StudentSignUpPage() {
                 </div>
             )}
         </div>
-    );
+    )
 }

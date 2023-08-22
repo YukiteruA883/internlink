@@ -65,7 +65,7 @@ export default function Service() {
             image: offer.image, // Use the image from the offer
         };
         // Send the POST request to add the internship
-        fetch("http://localhost:3001/internships/add", {
+        fetch("http://35.240.139.137:3001/internships/add", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -100,12 +100,12 @@ export default function Service() {
 
     const [offers, setOffers] = useState([])
     function getOffers() {
-        fetch("http://localhost:3001/offers/all").then((response) => response.json()).then((res) => setOffers(res.result))
+        fetch("http://35.240.139.137:3001/offers/all").then((response) => response.json()).then((res) => setOffers(res.result))
         
     }
 
     function getSomething() {
-        fetch("http://localhost:3001/users").then((response) => response.json()).then((res) => console.log(res))
+        fetch("http://35.240.139.137:3001/users").then((response) => response.json()).then((res) => console.log(res))
     }
 
     function setInternships() {
@@ -115,11 +115,11 @@ export default function Service() {
             company: company,
             image: "https://online.jwu.edu/sites/default/files/styles/article_feature_page/public/field/image/hire%20chef%20-%20tiny.jpg?itok=PMLCthNf"
         }
-        fetch("http://localhost:3001/offers", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
+        fetch("http://35.240.139.137:3001/offers", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
     }
 
     function deleteOffer(id) {
-        fetch(`http://localhost:3001/offers/${id}`, { method: "DELETE", headers: { "Content-Type": "application/json" } }).then(getOffers())
+        fetch(`http://35.240.139.137:3001/offers/${id}`, { method: "DELETE", headers: { "Content-Type": "application/json" } }).then(getOffers())
     }
 
     function updateOffer(id) {
@@ -129,7 +129,7 @@ export default function Service() {
             company: company,
             image: "https://online.jwu.edu/sites/default/files/styles/article_feature_page/public/field/image/hire%20chef%20-%20tiny.jpg?itok=PMLCthNf"
         }
-        fetch(`http://localhost:3001/offers/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
+        fetch(`http://35.240.139.137:3001/offers/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
     }
 
     useEffect(() => {
