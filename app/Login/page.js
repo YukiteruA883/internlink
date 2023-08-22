@@ -20,7 +20,7 @@ export default function LoginPage() {
       password: document.getElementById("password").value
     }
 
-    fetch("http://35.240.139.137:3001/users/login", {
+    fetch("https://35.240.139.137:3001/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
