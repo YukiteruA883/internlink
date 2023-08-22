@@ -74,7 +74,7 @@ export default function Service() {
 
     const [internships, setInternships] = useState([])
     function getInternships() {
-        fetch("https://35.240.139.137:3001/internships/all").then((response) => response.json()).then((res) => setInternships(res.result))
+        fetch("http://35.240.139.137:3001/internships/all").then((response) => response.json()).then((res) => setInternships(res.result))
     }
     useEffect(() => {
         getInternships()

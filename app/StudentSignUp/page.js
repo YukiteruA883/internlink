@@ -46,7 +46,7 @@ export default function StudentSignUpPage() {
             internships: 0
         };
 
-        fetch("https://35.240.139.137:3001/users/signup", {
+        fetch("http://35.240.139.137:3001/users/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
