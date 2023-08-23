@@ -7,6 +7,7 @@ import Link from 'next/link';
 export default function ProviderSignupPage() {
     const [error, setError] = useState(null);
     const [signedUp, setSignedUp] = useState(false);
+    const api_url = process.env.NEXT_PUBLIC_URL_API
 
     const redirectToStudentDashboard = () => {
         signIn("google", { callbackUrl: `${window.location.origin}/ProviderDashboard` });
@@ -47,7 +48,7 @@ export default function ProviderSignupPage() {
             internships: 0
         };
 
-        fetch("http://35.240.139.137:3001/users/signup", {
+        fetch(`${api_url}/users/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

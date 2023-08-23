@@ -8,6 +8,7 @@ import { LoginContext } from "../layout";
 
 export default function LoginPage() {
   const [error, setError] = useState(null);
+  const api_url = process.env.NEXT_PUBLIC_URL_API
   const router = useRouter();
   const signin = useContext(LoginContext)
   const redirectToStudentDashboard = () => {
@@ -20,7 +21,7 @@ export default function LoginPage() {
       password: document.getElementById("password").value
     }
 
-    fetch("http://35.240.139.137:3001/users/login", {
+    fetch(`${api_url}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

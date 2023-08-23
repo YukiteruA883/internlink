@@ -8,6 +8,7 @@ import Link from 'next/link';
 export default function Service() {
     const controls = useAnimation()
     const signin = useContext(LoginContext)
+    const api_url = process.env.NEXT_PUBLIC_URL_API
     const uid = signin.signIn?.uid
     const [ref, inView] = useInView({
         triggerOnce: true,
@@ -74,7 +75,10 @@ export default function Service() {
 
     const [internships, setInternships] = useState([])
     function getInternships() {
-        fetch("http://35.240.139.137:3001/internships/all").then((response) => response.json()).then((res) => setInternships(res.result))
+        // Include UID in the query parameters
+        fetch(`${api_url}/internships/all?uid=${uid}`)
+            .then((response) => response.json())
+            .then((res) => setInternships(res.result))
     }
     useEffect(() => {
         getInternships()
@@ -171,11 +175,9 @@ export default function Service() {
                             <NavItem href="/picks">Featured</NavItem>
                         </Nav>
                         <List>
-                            {internships
-                                .filter(offer => offer.uid === uid)
-                                .map((offer) => (
-                                    <ListItem key={offer.id} offer={offer} />
-                                ))}
+                            {internships.map((offer) => (
+                                <ListItem key={offer.id} offer={offer} />
+                            ))}
                         </List>
                     </div>
 

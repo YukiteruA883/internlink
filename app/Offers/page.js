@@ -9,6 +9,7 @@ import Link from 'next/link';
 export default function Service() {
     const controls = useAnimation()
     const signin = useContext(LoginContext) 
+    const api_url = process.env.NEXT_PUBLIC_URL_API
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -65,7 +66,7 @@ export default function Service() {
             image: offer.image, // Use the image from the offer
         };
         // Send the POST request to add the internship
-        fetch("http://35.240.139.137:3001/internships/add", {
+        fetch(`${api_url}/internships/add`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -100,12 +101,12 @@ export default function Service() {
 
     const [offers, setOffers] = useState([])
     function getOffers() {
-        fetch("http://35.240.139.137:3001/offers/all").then((response) => response.json()).then((res) => setOffers(res.result))
+        fetch(`${api_url}/offers/all`).then((response) => response.json()).then((res) => setOffers(res.result))
         
     }
 
     function getSomething() {
-        fetch("http://35.240.139.137:3001/users").then((response) => response.json()).then((res) => console.log(res))
+        fetch(`${api_url}/users`).then((response) => response.json()).then((res) => console.log(res))
     }
 
     function setInternships() {
@@ -115,11 +116,11 @@ export default function Service() {
             company: company,
             image: "https://online.jwu.edu/sites/default/files/styles/article_feature_page/public/field/image/hire%20chef%20-%20tiny.jpg?itok=PMLCthNf"
         }
-        fetch("http://35.240.139.137:3001/offers", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
+        fetch(`${api_url}/offers`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
     }
 
     function deleteOffer(id) {
-        fetch(`http://35.240.139.137:3001/offers/${id}`, { method: "DELETE", headers: { "Content-Type": "application/json" } }).then(getOffers())
+        fetch(`${api_url}/offers/${id}`, { method: "DELETE", headers: { "Content-Type": "application/json" } }).then(getOffers())
     }
 
     function updateOffer(id) {
@@ -129,7 +130,7 @@ export default function Service() {
             company: company,
             image: "https://online.jwu.edu/sites/default/files/styles/article_feature_page/public/field/image/hire%20chef%20-%20tiny.jpg?itok=PMLCthNf"
         }
-        fetch(`http://35.240.139.137:3001/offers/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
+        fetch(`${api_url}/offers/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).then(getOffers())
     }
 
     useEffect(() => {
