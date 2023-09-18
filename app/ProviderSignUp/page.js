@@ -21,6 +21,7 @@ export default function ProviderSignupPage() {
         const email = document.getElementById("email").value;
         const dateOfBirth = document.getElementById("dob").value;
         const password = document.getElementById("password").value;
+        const companyname = document.getElementById("companyname").value; 
 
         // Validation
         if (!firstName || !lastName || !email || !dateOfBirth || !password) {
@@ -45,7 +46,8 @@ export default function ProviderSignupPage() {
             username: email,
             password: password,
             dateOfBirth: dateOfBirth,
-            internships: 0
+            internships: 0,
+            companyName: companyname
         };
 
         fetch(`${api_url}/users/signup`, {
@@ -101,6 +103,10 @@ export default function ProviderSignupPage() {
                         </div>
                         <div className="flex flex-col mb-4">
                             <label htmlFor="password" className="mb-2">Password</label>
+                            <input type="password" id="password" name="password" className="p-2 border rounded" required />
+                        </div>
+                        <div className="flex flex-col mb-4">
+                            <label htmlFor="companyname" className="mb-2">Company Name</label>
                             <input type="password" id="password" name="password" className="p-2 border rounded" required />
                         </div>
                         <div className="mb-4">

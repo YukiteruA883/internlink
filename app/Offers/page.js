@@ -68,11 +68,14 @@ export default function Service() {
         // Send the POST request to add the internship
         fetch(`${api_url}/internships/add`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(data),
         })
         .then((response) => response.json())
         .then((res) => {
+            
             // Handle the response here, such as updating the UI or navigating to another page
         })
         .catch((error) => {
